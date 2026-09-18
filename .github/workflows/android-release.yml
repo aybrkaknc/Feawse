@@ -38,21 +38,31 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease --no-daemon
 
-      - name: Sign Android Release APK
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKey: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Sign Release APK
+        env:
+          SIGNING_KEY_BASE64: ${{ secrets.SIGNING_KEY }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo "$SIGNING_KEY_BASE64" | base64 -d > release.keystore
+          BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n 1)
+          echo "Using Android Build Tools at: $BUILD_TOOLS"
+          $BUILD_TOOLS/zipalign -v -p 4 app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/FEAWSE-v1.0.apk
+          $BUILD_TOOLS/apksigner sign --ks release.keystore \
+            --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass pass:"$KEYSTORE_PASSWORD" \
+            --key-pass pass:"$KEY_PASSWORD" \
+            --out app/build/outputs/apk/release/FEAWSE-v1.0.apk \
+            app/build/outputs/apk/release/FEAWSE-v1.0.apk
+          $BUILD_TOOLS/apksigner verify --verbose app/build/outputs/apk/release/FEAWSE-v1.0.apk
+          rm -f release.keystore
 
       - name: Upload Signed APK as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: FEAWSE-Signed-APK
-          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          path: app/build/outputs/apk/release/FEAWSE-v1.0.apk
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -60,7 +70,7 @@ jobs:
         with:
           tag_name: ${{ inputs.tag_name || github.ref_name }}
           name: FEAWSE Release ${{ inputs.tag_name || github.ref_name }}
-          files: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          files: app/build/outputs/apk/release/FEAWSE-v1.0.apk
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
