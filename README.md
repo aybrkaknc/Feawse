@@ -62,16 +62,6 @@ cd Feawse
 
 ---
 
-## 🤖 CI / CD & Automated Signing
-
-This repository is equipped with automated **GitHub Actions CI/CD** (`.github/workflows/android-release.yml`).
-Whenever a new release tag is pushed or triggered via Actions:
-1. The project is built cleanly on Ubuntu.
-2. The release APK is signed and zip-aligned with the repository keystore secret.
-3. A new GitHub Release is automatically published with the signed `.apk` attached.
-
----
-
 ## 📄 License
 
 This project is licensed under the GNU General Public License v3 (GPLv3).
