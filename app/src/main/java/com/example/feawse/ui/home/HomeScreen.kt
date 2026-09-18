@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -316,7 +317,7 @@ fun HomeContent(
                                     fontSize = 13.5.sp
                                 )
                                 Text(
-                                    text = if (isGuideExpanded) "Kayıt dosya yolları ve detaylar aşağıdadır." else "Değişiklik öncesi orijinal dosyanızın yedeğini saklayın.",
+                                    text = if (isGuideExpanded) "Kayıt dosyası ve konum ipuçları" else "Değişiklik öncesi orijinal dosyanızın yedeğini saklayın.",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = AwakeningTextSecondary,
                                     fontSize = 11.sp,
@@ -375,86 +376,73 @@ fun HomeContent(
                                 .padding(horizontal = 12.dp, vertical = 10.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            // Section: Emulator Paths
-                            Surface(
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(8.dp),
-                                color = AwakeningDarkBg,
-                                border = BorderStroke(0.8.dp, AwakeningBorderSubtle)
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(10.dp),
-                                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                                ) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Icon(Icons.Default.Folder, contentDescription = null, tint = AwakeningGold, modifier = Modifier.size(14.dp))
-                                        Spacer(modifier = Modifier.width(6.dp))
-                                        Text("3DS Emülatör Kayıt Klasörleri", color = AwakeningGoldBright, fontWeight = FontWeight.Bold, fontSize = 11.5.sp)
-                                    }
-                                    Text(
-                                        text = "• Citra / Azahar Plus: Android/data/org.citra.citra_emu/files/sdmc/Nintendo 3DS/... veya Dahili Depolama/Azahar Plus/sdmc/...",
-                                        color = AwakeningTextPrimary,
-                                        fontSize = 10.5.sp,
-                                        lineHeight = 14.sp
-                                    )
-                                    Text(
-                                        text = "• Lime3DS / Mandarine: Android/data/io.github.lime3ds/files/sdmc/...",
-                                        color = AwakeningTextPrimary,
-                                        fontSize = 10.5.sp,
-                                        lineHeight = 14.sp
-                                    )
-                                }
-                            }
-
-                            // Section: Title IDs & Save Names
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
+                                // 1. Dosya Yuvaları
                                 Surface(
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(8.dp),
                                     color = AwakeningDarkBg,
                                     border = BorderStroke(0.8.dp, AwakeningBorderSubtle)
                                 ) {
-                                    Column(modifier = Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                                        Text("Awakening Title ID", color = AwakeningGoldBright, fontWeight = FontWeight.Bold, fontSize = 11.sp)
-                                        Text("• ABD (USA): 000a0500", color = AwakeningTextPrimary, fontSize = 10.sp)
-                                        Text("• Avrupa (EUR): 0009f100", color = AwakeningTextPrimary, fontSize = 10.sp)
-                                        Text("• Japonya (JPN): 0007a900", color = AwakeningTextPrimary, fontSize = 10.sp)
+                                    Column(
+                                        modifier = Modifier.padding(10.dp),
+                                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                                    ) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Icon(Icons.AutoMirrored.Filled.List, contentDescription = null, tint = AwakeningGold, modifier = Modifier.size(13.dp))
+                                            Spacer(modifier = Modifier.width(5.dp))
+                                            Text("Dosya Yuvaları", color = AwakeningGoldBright, fontWeight = FontWeight.Bold, fontSize = 11.5.sp)
+                                        }
+                                        Text("• chapter0-2 : Yuva 1, 2, 3", color = AwakeningTextPrimary, fontSize = 10.5.sp)
+                                        Text("• chapter3 : Savaş Kaydı", color = AwakeningTextPrimary, fontSize = 10.5.sp)
                                     }
                                 }
 
+                                // 2. Nerede Bulunur?
                                 Surface(
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(8.dp),
                                     color = AwakeningDarkBg,
                                     border = BorderStroke(0.8.dp, AwakeningBorderSubtle)
                                 ) {
-                                    Column(modifier = Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                                        Text("Dosya Yuvaları", color = AwakeningGoldBright, fontWeight = FontWeight.Bold, fontSize = 11.sp)
-                                        Text("• chapter0 = Yuva 1", color = AwakeningTextPrimary, fontSize = 10.sp)
-                                        Text("• chapter1 = Yuva 2", color = AwakeningTextPrimary, fontSize = 10.sp)
-                                        Text("• chapter2 = Yuva 3", color = AwakeningTextPrimary, fontSize = 10.sp)
-                                        Text("• chapter3 = Savaş Kaydı", color = AwakeningTextPrimary, fontSize = 10.sp)
+                                    Column(
+                                        modifier = Modifier.padding(10.dp),
+                                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                                    ) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Icon(Icons.Default.Folder, contentDescription = null, tint = AwakeningGold, modifier = Modifier.size(13.dp))
+                                            Spacer(modifier = Modifier.width(5.dp))
+                                            Text("Dosya Konumu", color = AwakeningGoldBright, fontWeight = FontWeight.Bold, fontSize = 11.5.sp)
+                                        }
+                                        Text("Citra / Lime3DS / Azahar:", color = AwakeningTextSecondary, fontSize = 9.5.sp)
+                                        Text("sdmc / Nintendo 3DS", color = AwakeningTextPrimary, fontWeight = FontWeight.SemiBold, fontSize = 10.5.sp)
                                     }
                                 }
                             }
 
-                            // Safety hint
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 2.dp),
-                                verticalAlignment = Alignment.CenterVertically
+                            // 3. Otomatik Yedek Bilgisi
+                            Surface(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(6.dp),
+                                color = AwakeningNavySurface.copy(alpha = 0.6f),
+                                border = BorderStroke(0.6.dp, AwakeningBorderSubtle)
                             ) {
-                                Icon(Icons.Default.Security, contentDescription = null, tint = AwakeningGold, modifier = Modifier.size(13.dp))
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(
-                                    text = "Aşağıdaki 'Güvenlik Yedekleri' alanından dilediğiniz an tek tıkla 'Yedek Al' yapabilirsiniz.",
-                                    color = AwakeningTextSecondary,
-                                    fontSize = 10.5.sp
-                                )
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(Icons.Default.Security, contentDescription = null, tint = AwakeningGold, modifier = Modifier.size(14.dp))
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = "Uygulama her kaydetmede otomatik '.bak' yedeği alır; dilediğiniz an tek tıkla geri yükleyebilirsiniz.",
+                                        color = AwakeningTextSecondary,
+                                        fontSize = 10.5.sp,
+                                        lineHeight = 14.sp
+                                    )
+                                }
                             }
                         }
                     }
