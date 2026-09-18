@@ -20,5 +20,5 @@ local.properties
 *-base64.txt
 
 # Temporary local screenshots and test scripts
-*.png
+/*.png
 hot-reload.ps1
