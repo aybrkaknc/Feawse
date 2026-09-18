@@ -1,0 +1,24 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Signing Keystores (Security Critical: Never commit to Git)
+*.jks
+*.keystore
+*-base64.txt
+
+# Temporary local screenshots and test scripts
+*.png
+hot-reload.ps1
